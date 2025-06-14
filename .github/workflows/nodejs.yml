@@ -8,7 +8,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [20.x]
+        node-version: [24.x]
 
     steps:
       - uses: actions/checkout@v4
@@ -19,6 +19,6 @@ jobs:
       - name: npm install and test
         run: |
           npm ci
-          # npm run build
-          npm run lint
-          npm test
+          node --run build
+          node --run lint
+          node --run test

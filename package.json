@@ -3,11 +3,30 @@
   "type": "module",
   "scripts": {
     "test": "node --test",
+    "build": "tsgo",
     "lint": "npm run format -- -c",
-    "format": "prettier --write './**/*.{js,json,yml,md}'"
+    "format": "prettier --write './**/*.{js,ts,json,yml,md}'"
   },
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "24.0.1",
     "prettier": "3.0.3"
+  },
+  "name": "real-world-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HugoDF/real-world-ts.git"
+  },
+  "keywords": [],
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/HugoDF/real-world-ts/issues"
+  },
+  "homepage": "https://github.com/HugoDF/real-world-ts#readme",
+  "dependencies": {
+    "@typescript/native-preview": "7.0.0-dev.20250614.1"
   }
 }
