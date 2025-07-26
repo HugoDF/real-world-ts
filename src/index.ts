@@ -11,6 +11,19 @@ export type AsValue = `${TransactionTypes}`;
 
 expectTypeOf<AsValue>().toEqualTypeOf<"CC" | "BACS">();
 
+function MyComp({
+  txType,
+  txTypeStr,
+}: {
+  txType: TransactionTypes;
+  txTypeStr: AsValue;
+}) {
+  //...
+}
+MyComp({ txType: TransactionTypes.CC, txTypeStr: "CC" });
+// @ts-expect-error Type '"CC"' is not assignable to type 'TransactionTypes'.
+MyComp({ txType: "CC", txTypeStr: TransactionTypes.CC });
+
 /* Omit/Pick */
 
 export type Product = {
@@ -67,6 +80,18 @@ type FieldValues = Fields[keyof Fields];
 expectTypeOf<FieldNames>().toEqualTypeOf<"amount" | "formattedAmount">();
 expectTypeOf<FieldValues>().toEqualTypeOf<number | string>();
 // note the lack of relationship between amount <-> number and formattedAmount <-> string;
+
+function setFieldNaive(name: FieldNames, value: FieldValues) {}
+setFieldNaive("amount", "200"); // no error
+
+function setFieldStrict(update: FieldDefs) {}
+// @ts-expect-error
+// Argument of type '{ name: "amount"; value: string; }' is not assignable to parameter of type 'FieldDefs'.
+//  Types of property 'value' are incompatible.
+//    Type 'string' is not assignable to type 'number'.
+setFieldStrict({ name: "amount", value: "200" });
+// no error
+setFieldStrict({ name: "amount", value: 200 });
 
 /* Simulating tuples */
 
@@ -126,6 +151,8 @@ test("reverse mapping of enum with implicit numeric values", () => {
 test("reverse mapping of enum with string values - does not work", () => {
   expectTypeOf(PlatformStringValues).not.toHaveProperty(platformString);
   // @ts-expect-error
+  // Element implicitly has an 'any' type because expression of type 'Platform.WEB' can't be used to index type 'typeof PlatformStringValues'.
+  // Property '[Platform.WEB]' does not exist on type 'typeof PlatformStringValues'
   assert.equal(PlatformStringValues[platformString], undefined);
 });
 
