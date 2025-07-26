@@ -97,3 +97,62 @@ test("inverts the enum value", () => {
     DoorState.OPEN,
   );
 });
+
+/* Enum value reverse mapping */
+
+enum PaymentType {
+  CC = 1,
+  BACS = 2,
+}
+enum Platform {
+  WEB,
+  MOBILE,
+}
+enum PlatformStringValues {
+  WEB = "web",
+  MOBILE = "mobile",
+}
+
+const paymentType = PaymentType.CC;
+const platform = Platform.MOBILE;
+const platformString = Platform.WEB;
+
+test("reverse mapping of enum with set numeric values", () => {
+  assert.equal(PaymentType[paymentType], "CC");
+});
+test("reverse mapping of enum with implicit numeric values", () => {
+  assert.equal(Platform[platform], "MOBILE");
+});
+test("reverse mapping of enum with string values - does not work", () => {
+  expectTypeOf(PlatformStringValues).not.toHaveProperty(platformString);
+  // @ts-expect-error
+  assert.equal(PlatformStringValues[platformString], undefined);
+});
+
+/* Exhaustive switch match over union */
+type PlatformType = "MOBILE" | "WEB";
+function generateAnalyticsPlatform(platform: PlatformType) {
+  switch (platform) {
+    case "MOBILE":
+      return "mobile";
+    case "WEB":
+      return "web";
+    default:
+      assertNever(platform);
+  }
+}
+
+function assertNever(value: never) {
+  if (value) {
+    throw new Error(`Unexpected value "${value}"`);
+  }
+}
+
+[
+  { platformValue: "WEB", expected: "web" } as const,
+  { platformValue: "MOBILE", expected: "mobile" } as const,
+].map(({ platformValue, expected }) => {
+  test(`generateAnalyticsPlatform(${platformValue}) outputs '${expected}'`, () => {
+    assert.equal(generateAnalyticsPlatform(platformValue), expected);
+  });
+});
