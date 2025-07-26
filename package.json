@@ -10,7 +10,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/node": "24.0.1",
-    "expect-type": "1.2.1",
+    "expect-type": "1.2.2",
     "prettier": "3.0.3"
   },
   "name": "real-world-ts",

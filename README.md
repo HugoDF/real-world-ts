@@ -1,18 +1,9 @@
-# [Project Name]
-
-Boilerplate repo with:
-
-- MIT License
-- Node, npm
-- tests with the `node:test` built-in
-- formatting with prettier
-- GitHub Actions on commit and to auto-publish on GH release
-  - **note**: for publish to work, `NPM_TOKEN` has to be set in the repository GH Actions secrets
+# Real World TS Examples
 
 ## Requirements
 
-- Node 20
-- npm v8+
+- Node 24
+- npm
 
 ## Setup
 
@@ -22,6 +13,7 @@ Boilerplate repo with:
 ## npm scripts
 
 - `npm test` will run tests using the [Node.js test runner](https://nodejs.org/api/test.html#running-tests-from-the-command-line) and the `node:test` module.
+- `npm run build` will typecheck using `typescript-go`
 - `npm run format` will run prettier on all the examples files (and tests).
 
 ## LICENSE
